@@ -53,4 +53,13 @@ void MergeSort(T arr[], int n){
     __MergeSort(arr, 0, n-1);
 }
 
+template<typename T>
+void MergeSortBottomToUp(T arr[], int n){
+    for (int size = 1; size < n; size += size) {
+        for (int i = 0; i + size < n; i += size + size) {
+            __Merge(arr,i,i+size-1,min(i+size+size-1,n-1));
+        }
+    }
+}
+
 #endif //SUANFA_MERGESORT_H
