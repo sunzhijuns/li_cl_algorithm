@@ -5,6 +5,8 @@
 #ifndef SUANFA_MERGESORT_H
 #define SUANFA_MERGESORT_H
 
+#include "InsertionSort.h"
+
 template <typename T>
 void __Merge(T arr[], int left, int mid, int right){
 
@@ -33,13 +35,16 @@ void __Merge(T arr[], int left, int mid, int right){
 
 template<typename T>
 void __MergeSort(T arr[], int left, int right){
-    if(left >= right){
+    if(right - left <= 15){
+        InsertionSort(arr, left, right);
         return;
     }
     int mid = (right - left) / 2 + left;
     __MergeSort(arr, left, mid);
     __MergeSort(arr, mid+1, right);
-    __Merge(arr, left, mid, right);
+    if(arr[mid] > arr[mid+1]){
+        __Merge(arr, left, mid, right);
+    }
 
 }
 
