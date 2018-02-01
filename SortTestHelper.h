@@ -54,6 +54,12 @@ namespace SortTestHelper{
 
     }
 
+    int* CopyIntArray(int a[], int n){
+        int * arr = new int[n];
+        copy(a, a+n, arr);
+        return arr;
+    }
+
 
 }
 
