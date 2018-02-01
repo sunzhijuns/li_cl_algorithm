@@ -3,4 +3,4 @@ project(SuanFa)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(SuanFa main.cpp Student.h SortTestHelper.h SelectionSort.h)
+add_executable(SuanFa main.cpp Student.h SortTestHelper.h SelectionSort.h InsertionSort.h)
