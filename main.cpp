@@ -1,5 +1,4 @@
 #include <iostream>
-#include "Student.h"
 #include "SortTestHelper.h"
 
 using namespace std;
@@ -21,7 +20,7 @@ void SelectionSort(T arr[], int n){
 int main() {
     int n = 10000;
     int * arr = SortTestHelper::GenerateRandomArray(n,0,n);
-    SelectionSort(arr,10);
+    SortTestHelper::TestSort("SelectionSort", SelectionSort, arr, n);
     SortTestHelper::PrintArray(arr,10);
 
     delete[] arr;

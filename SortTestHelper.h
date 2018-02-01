@@ -31,6 +31,30 @@ namespace SortTestHelper{
         }
         cout << endl;
     }
+
+    template<typename T>
+    bool IsSorted(T arr[], int n){
+        for (int i = 1; i < n; ++i) {
+            if (arr[i - 1] > arr[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    template<typename T>
+    void TestSort(const string& sort_name, void(* sort)(T[], int), T arr[], int n){
+
+        clock_t start_time = clock();
+        sort(arr,n);
+        clock_t end_time = clock();
+        assert(IsSorted(arr, n));
+        cout << sort_name << " : " << double(end_time - start_time) / CLOCKS_PER_SEC << " s" << endl;
+        return;
+
+    }
+
+
 }
 
 #endif //SUANFA_SORTTESTHELPER_H
