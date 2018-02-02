@@ -31,7 +31,7 @@ int main() {
     SortTestHelper::TestSort("MergeSortBottomToUp", MergeSortBottomToUp, arr1, n);
     SortTestHelper::PrintArray(arr1,print_n);
 
-    SortTestHelper::TestSort("MergeSort", MergeSort, arr2, n);
+    SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr2, n);
     SortTestHelper::PrintArray(arr2,print_n);
 
     delete[] arr;

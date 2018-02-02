@@ -113,4 +113,23 @@ void MergeSortBottomToUp(T arr[], int n){
     }
 }
 
+template<typename T>
+void MergeSortBottomToUpOptimized(T arr[], int n){
+
+    for (int i = 0; i < n; i += 16) {
+        InsertionSort(arr,i, min(i+15, n-1));
+    }
+
+    T* auxiliary_array = new T[n];
+    for (int size = 16; size <= n; size += 16) {
+        for (int i = 0; i < n-size; i += size + size) {
+            if(arr[i+size - 1] > arr[i+size]){
+                __MergeOptimizeMemory(arr,auxiliary_array,i, i+size-1, min(i+size+size-1,n-1));
+            }
+        }
+    }
+    delete[] auxiliary_array;
+
+}
+
 #endif //SUANFA_MERGESORT_H
