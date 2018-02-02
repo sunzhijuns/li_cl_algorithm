@@ -33,6 +33,33 @@ void __Merge(T arr[], int left, int mid, int right){
 
 }
 
+
+template <typename T>
+void __MergeOptimizeMemory(T arr[],T auxiliary_array[], int left, int mid, int right){
+
+    T* temp = auxiliary_array;
+    for (int i = left; i <= right; ++i) {
+        temp[i] = arr[i];
+    }
+    int i = left, j = mid+1;
+    for (int k = left; k <= right; ++k) {
+        if(i > mid){
+            arr[k] = temp[j];
+            j++;
+        }else if(j > right){
+            arr[k] = temp[i];
+            i++;
+        }else if(temp[i] <= temp[j]){
+            arr[k] = temp[i];
+            i++;
+        }else{
+            arr[k] = temp[j];
+            j++;
+        }
+    }
+
+}
+
 template<typename T>
 void __MergeSort(T arr[], int left, int right){
     if(right - left <= 15){
@@ -49,8 +76,32 @@ void __MergeSort(T arr[], int left, int right){
 }
 
 template<typename T>
+void __MergeSortOptimizeMemory(T arr[],T auxiliary_array[], int left, int right){
+    if(right - left <= 15){
+        InsertionSort(arr, left, right);
+        return;
+    }
+    int mid = (right - left) / 2 + left;
+    __MergeSortOptimizeMemory(arr,auxiliary_array, left, mid);
+    __MergeSortOptimizeMemory(arr,auxiliary_array, mid+1, right);
+    if(arr[mid] > arr[mid+1]){
+        __MergeOptimizeMemory(arr,auxiliary_array, left, mid, right);
+    }
+
+}
+
+
+template<typename T>
 void MergeSort(T arr[], int n){
     __MergeSort(arr, 0, n-1);
+}
+
+template<typename T>
+void MergeSortOptimizeMemory(T arr[], int n){
+    T* auxiliary_array = new T[n];
+    __MergeSortOptimizeMemory(arr,auxiliary_array,0,n-1);
+    delete[] auxiliary_array;
+
 }
 
 template<typename T>

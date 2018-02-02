@@ -14,24 +14,25 @@ int main11(){
 
 
 int main() {
-    int n = 10;
+    int n = 100*10000;
+    int print_n = 100;
     int * arr = SortTestHelper::GenerateRandomArray(n,0,n);
 //    int * arr = SortTestHelper::GenerateNearlyOrderedArray(n,10);
     int * arr1 = SortTestHelper::CopyIntArray(arr,n);
     int * arr2 = SortTestHelper::CopyIntArray(arr,n);
 
-//    SortTestHelper::PrintArray(arr,10);
-    SortTestHelper::PrintArray(arr1,10);
-    SortTestHelper::PrintArray(arr2,10);
+//    SortTestHelper::PrintArray(arr,print_n);
+    SortTestHelper::PrintArray(arr1,print_n);
+    SortTestHelper::PrintArray(arr2,print_n);
 
-//    SortTestHelper::TestSort("SelectionSort", SelectionSort, arr, n);
-//    SortTestHelper::PrintArray(arr,10);
+    SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
+    SortTestHelper::PrintArray(arr,print_n);
 
     SortTestHelper::TestSort("MergeSortBottomToUp", MergeSortBottomToUp, arr1, n);
-    SortTestHelper::PrintArray(arr1,10);
+    SortTestHelper::PrintArray(arr1,print_n);
 
     SortTestHelper::TestSort("MergeSort", MergeSort, arr2, n);
-    SortTestHelper::PrintArray(arr2,10);
+    SortTestHelper::PrintArray(arr2,print_n);
 
     delete[] arr;
     delete[] arr1;
