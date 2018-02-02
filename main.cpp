@@ -6,18 +6,21 @@
 
 #include "MergeSort.h"
 
+
+
 int main11(){
-    int a[10] = {2,43,4,2,3};
-    InsertionSort(a,0,9);
-    SortTestHelper::PrintArray(a,10);
+    int n = 100;
+    int * a = SortTestHelper::GenerateRandomArray(n,0,1);
+    QuickSort(a,n);
+    SortTestHelper::PrintArray(a,100);
+    delete[] a;
     return 0;
 }
-
 
 int main() {
     int n = 100*10000;
     int print_n = 100;
-    int * arr = SortTestHelper::GenerateRandomArray(n,0,n);
+    int * arr = SortTestHelper::GenerateRandomArray(n,0,10);
 //    int * arr = SortTestHelper::GenerateNearlyOrderedArray(n,10);
     int * arr1 = SortTestHelper::CopyIntArray(arr,n);
     int * arr2 = SortTestHelper::CopyIntArray(arr,n);
