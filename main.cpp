@@ -20,34 +20,78 @@ int main11(){
 int main() {
     int n = 100*10000;
     int print_n = 100;
-//    int * arr = SortTestHelper::GenerateRandomArray(n,0,n);
-    int * arr = SortTestHelper::GenerateNearlyOrderedArray(n,1000);
-    int * arr1 = SortTestHelper::CopyIntArray(arr,n);
-    int * arr2 = SortTestHelper::CopyIntArray(arr,n);
-    int * arr3 = SortTestHelper::CopyIntArray(arr,n);
+    {
+        cout<<"--一般的随机数组---random array, size = "<<n << ", range = [" <<"0,"<<n<<"]"<<endl;
+        int * arr = SortTestHelper::GenerateRandomArray(n,0,n);
+//    int * arr = SortTestHelper::GenerateNearlyOrderedArray(n,1000);
+        int * arr1 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr2 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr3 = SortTestHelper::CopyIntArray(arr,n);
+
+        SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
+
+        SortTestHelper::TestSort("QuickSort", QuickSort, arr1, n);
+
+        SortTestHelper::TestSort("QuickSort3Ways", QuickSort3Ways, arr2, n);
+
+        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr3, n);
+
+        delete[] arr;
+        delete[] arr1;
+        delete[] arr2;
+        delete[] arr3;
+
+        cout << endl<<endl;
+    }
+
+    {
+        cout<<"--大量重复键值的随机数组--random array, size = "<<n << ", range = [" <<"0,"<<100<<"]"<<endl;
+        int * arr = SortTestHelper::GenerateRandomArray(n,0,100);
+//    int * arr = SortTestHelper::GenerateNearlyOrderedArray(n,1000);
+        int * arr1 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr2 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr3 = SortTestHelper::CopyIntArray(arr,n);
+
+        SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
+
+        SortTestHelper::TestSort("QuickSort", QuickSort, arr1, n);
+
+        SortTestHelper::TestSort("QuickSort3Ways", QuickSort3Ways, arr2, n);
+
+        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr3, n);
+
+        delete[] arr;
+        delete[] arr1;
+        delete[] arr2;
+        delete[] arr3;
+
+        cout << endl<<endl;
+    }
 
 
-//    SortTestHelper::PrintArray(arr,print_n);
-    SortTestHelper::PrintArray(arr1,print_n);
-    SortTestHelper::PrintArray(arr2,print_n);
+    {
+        int swap_times = 1000;
+        cout<<"--几乎有序数组--nearly ordered array, size = "<<n << ", swap = "<<swap_times<<endl;
+//        int * arr = SortTestHelper::GenerateRandomArray(n,0,100);
+    int * arr = SortTestHelper::GenerateNearlyOrderedArray(n,swap_times);
+        int * arr1 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr2 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr3 = SortTestHelper::CopyIntArray(arr,n);
 
-    SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
-    SortTestHelper::PrintArray(arr,print_n);
+        SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
 
-    SortTestHelper::TestSort("QuickSort", QuickSort, arr1, n);
-    SortTestHelper::PrintArray(arr1,print_n);
+        SortTestHelper::TestSort("QuickSort", QuickSort, arr1, n);
 
+        SortTestHelper::TestSort("QuickSort3Ways", QuickSort3Ways, arr2, n);
 
-    SortTestHelper::TestSort("QuickSort3Ways", QuickSort3Ways, arr2, n);
-    SortTestHelper::PrintArray(arr2,print_n);
+        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr3, n);
 
-    SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr3, n);
-    SortTestHelper::PrintArray(arr3,print_n);
+        delete[] arr;
+        delete[] arr1;
+        delete[] arr2;
+        delete[] arr3;
+    }
 
-    delete[] arr;
-    delete[] arr1;
-    delete[] arr2;
-    delete[] arr3;
 
     return 0;
 }
