@@ -2,6 +2,7 @@
 #include "SortTestHelper.h"
 #include "SelectionSort.h"
 #include "InsertionSort.h"
+#include "QuickSort.h"
 
 #include "MergeSort.h"
 
@@ -28,7 +29,7 @@ int main() {
     SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
     SortTestHelper::PrintArray(arr,print_n);
 
-    SortTestHelper::TestSort("MergeSortBottomToUp", MergeSortBottomToUp, arr1, n);
+    SortTestHelper::TestSort("QuickSort", QuickSort, arr1, n);
     SortTestHelper::PrintArray(arr1,print_n);
 
     SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr2, n);
