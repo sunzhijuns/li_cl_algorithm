@@ -11,6 +11,8 @@
 template<typename T>
 int __Partition(T arr[], int left, int right){
 
+    std::swap(arr[rand()%(right - left + 1) + left],arr[left]);
+
     T partition = arr[left];
     int less_equal_index = left;
     for (int i = left+1; i <= right; ++i) {
@@ -46,6 +48,7 @@ void __QuickSort(T arr[], int left, int right){
 template<typename T>
 void QuickSort(T arr[], int n){
 
+    srand(time(NULL));
     __QuickSort(arr, 0, n-1);
 
 }
