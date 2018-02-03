@@ -28,6 +28,25 @@ private:
         }
 
     }
+    void __ShipDown(int index){
+
+        while(HasLeftChild(index)){
+
+            int child_index = GetLeftChildIndex(index);
+            if(HasRightChild(index) &&
+                    Get(child_index) < Get(GetRightChildIndex(index))){
+                child_index = GetRightChildIndex(index);
+            }
+
+            if(Get(index) >= Get(child_index)){
+                break;
+            }
+
+            Swap(index, child_index);
+            index = child_index;
+        }
+
+    }
 
     void __Enlarge(){
         _capacity *= 2;
@@ -38,10 +57,22 @@ private:
         _data = data;
 
     }
-
+/*辅助的公共函数*/
 public:
     bool HasParent(int index){
         return index/2 > 0;
+    }
+    bool HasLeftChild(int index){
+        return 2*index <= _count;
+    }
+    Item GetLeftChildIndex(int parent_index){
+        return parent_index*2;
+    }
+    bool HasRightChild(int index){
+        return (2*index+1) <= _count;
+    }
+    Item GetRightChildIndex(int parent_index){
+        return parent_index*2 + 1;
     }
     Item GetParent(int index){
         return _data[index/2];
@@ -57,7 +88,7 @@ public:
         std::swap(_data[a],_data[b]);
     }
 
-
+/*实现主要功能的公共函数*/
 public:
     MaxHeap(int capacity){
         _data = new Item[capacity + 1];
@@ -81,6 +112,16 @@ public:
         _data[_count+1] = item;
         _count++;
         __ShipUp(_count);
+    }
+    Item ExtractMax(){
+        assert(_count > 0);
+
+        Item return_item = _data[1];
+        _data[1] = _data[_count];
+        _count --;
+        __ShipDown(1);
+        return return_item;
+
     }
 
     void Print(){

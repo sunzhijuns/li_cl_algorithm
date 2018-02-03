@@ -13,10 +13,17 @@ int main(){
     cout<<max_heap.Size()<< endl;
     srand(time(NULL));
 
-    for (int i = 0; i < 2; ++i) {
-        max_heap.Insert(i);
+    int n = 5;
+
+    for (int i = 0; i < n; ++i) {
+        max_heap.Insert(rand()%50);
     }
-    max_heap.TestPrint();
+    for (int j = 0; j < n; ++j) {
+
+        max_heap.TestPrint();
+        cout<<"------------------------  取出 "<<max_heap.ExtractMax()<<endl;
+        cout<<endl;
+    }
 
     return 0;
 }
