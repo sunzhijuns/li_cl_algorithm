@@ -25,27 +25,27 @@ private:
 private:
     void __ShiftUp(int index){
 
-        while(HasParent(index) && GetItem(GetParentIndex(index)) < GetItem(index)){
-            SwapIndex(index, GetParentIndex(index));
-            index = GetParentIndex(index);
+        while(__HasParent(index) && __GetItem(__GetParentIndex(index)) < __GetItem(index)){
+            __SwapIndex(index, __GetParentIndex(index));
+            index = __GetParentIndex(index);
         }
 
     }
     void __ShiftDown(int index){
 
-        while(HasLeftChild(index)){
+        while(__HasLeftChild(index)){
 
-            int child_index = GetLeftChildIndex(index);
-            if(HasRightChild(index) &&
-               GetItem(child_index) < GetItem(GetRightChildIndex(index))){
+            int child_index = __GetLeftChildIndex(index);
+            if(__HasRightChild(index) &&
+                    __GetItem(child_index) < __GetItem(GetRightChildIndex(index))){
                 child_index = GetRightChildIndex(index);
             }
 
-            if(GetItem(index) >= GetItem(child_index)){
+            if(__GetItem(index) >= __GetItem(child_index)){
                 break;
             }
 
-            SwapIndex(index, child_index);
+            __SwapIndex(index, child_index);
             index = child_index;
         }
 
@@ -70,34 +70,31 @@ private:
 
 
     }
-/*辅助的公共函数*/
-public:
-    bool HasParent(int index){
+/*辅助的私有函数*/
+private:
+    bool __HasParent(int index){
         return index/2 > 0;
     }
-    bool HasLeftChild(int index){
+    bool __HasLeftChild(int index){
         return 2*index <= _count;
     }
-    Item GetLeftChildIndex(int parent_index){
+    int __GetLeftChildIndex(int parent_index){
         return parent_index*2;
     }
-    bool HasRightChild(int index){
+    bool __HasRightChild(int index){
         return (2*index+1) <= _count;
     }
-    Item GetRightChildIndex(int parent_index){
+    int GetRightChildIndex(int parent_index){
         return parent_index*2 + 1;
     }
-//    Item GetParent(int index){
-//        return _data[_indices[index/2]];
-//    }
 
-    int GetParentIndex(int index){
+    int __GetParentIndex(int index){
         return  index / 2;
     }
-    Item GetItem(int index){
+    Item __GetItem(int index){
         return _data[_indices[index]];
     }
-    void SwapIndex(int a, int b){
+    void __SwapIndex(int a, int b){
         std::swap(_indices[a],_indices[b]);
     }
 
@@ -140,13 +137,46 @@ public:
     Item ExtractMax(){
         assert(_count > 0);
 
-        Item return_item = GetItem(1);
+        Item return_item = __GetItem(1);
         _indices[1] = _indices[_count];
         _count --;
         __ShiftDown(1);
         return return_item;
 
     }
+
+    //外部索引从0开始
+    int ExtractMaxIndex(){
+        assert(_count > 0);
+
+        int return_index = _indices[1] - 1;//外部索引从0开始
+        _indices[1] = _indices[_count];
+        _count --;
+        __ShiftDown(1);
+        return return_index;
+
+    }
+
+    //外部索引从0开始
+    Item GetItem(int index){
+        return _data[index + 1];
+    }
+
+    //外部索引从0开始
+    void ChangeItem(int index, Item new_item){
+
+        index++;
+        _data[index] = new_item;
+        for (int i = 1; i < _count; ++i) {
+            if(index == i){
+                __ShiftUp(i);
+                __ShiftDown(i);
+                return;
+            }
+        }
+
+    }
+
 
     void Print(){
         for (int i = 0; i <= _count; ++i) {
