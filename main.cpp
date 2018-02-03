@@ -5,19 +5,23 @@
 #include "QuickSort.h"
 
 #include "MergeSort.h"
+#include "MaxHeap.h"
 
 
+int main(){
+    MaxHeap<int> max_heap = MaxHeap<int>(1);
+    cout<<max_heap.Size()<< endl;
+    srand(time(NULL));
 
-int main11(){
-    int n = 100;
-    int * a = SortTestHelper::GenerateRandomArray(n,0,10);
-    QuickSort3Ways(a,n);
-    SortTestHelper::PrintArray(a,100);
-    delete[] a;
+    for (int i = 0; i < 2; ++i) {
+        max_heap.Insert(i);
+    }
+    max_heap.TestPrint();
+
     return 0;
 }
 
-int main() {
+int main11() {
     int n = 100*10000;
     int print_n = 100;
     {
