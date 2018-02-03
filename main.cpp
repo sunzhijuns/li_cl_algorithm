@@ -6,9 +6,10 @@
 
 #include "MergeSort.h"
 #include "MaxHeap.h"
+#include "HeapSort.h"
 
 
-int main(){
+int main11(){
     MaxHeap<int> max_heap = MaxHeap<int>(1);
     cout<<max_heap.Size()<< endl;
     srand(time(NULL));
@@ -28,7 +29,7 @@ int main(){
     return 0;
 }
 
-int main11() {
+int main() {
     int n = 100*10000;
     int print_n = 100;
     {
@@ -38,6 +39,7 @@ int main11() {
         int * arr1 = SortTestHelper::CopyIntArray(arr,n);
         int * arr2 = SortTestHelper::CopyIntArray(arr,n);
         int * arr3 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr4 = SortTestHelper::CopyIntArray(arr,n);
 
         SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
 
@@ -45,12 +47,15 @@ int main11() {
 
         SortTestHelper::TestSort("QuickSort3Ways", QuickSort3Ways, arr2, n);
 
-        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr3, n);
+        SortTestHelper::TestSort("HeapSort", HeapSort, arr3, n);
+
+        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr4, n);
 
         delete[] arr;
         delete[] arr1;
         delete[] arr2;
         delete[] arr3;
+        delete[] arr4;
 
         cout << endl<<endl;
     }
@@ -62,6 +67,7 @@ int main11() {
         int * arr1 = SortTestHelper::CopyIntArray(arr,n);
         int * arr2 = SortTestHelper::CopyIntArray(arr,n);
         int * arr3 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr4 = SortTestHelper::CopyIntArray(arr,n);
 
         SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
 
@@ -69,12 +75,15 @@ int main11() {
 
         SortTestHelper::TestSort("QuickSort3Ways", QuickSort3Ways, arr2, n);
 
-        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr3, n);
+        SortTestHelper::TestSort("HeapSort", HeapSort, arr3, n);
+
+        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr4, n);
 
         delete[] arr;
         delete[] arr1;
         delete[] arr2;
         delete[] arr3;
+        delete[] arr4;
 
         cout << endl<<endl;
     }
@@ -88,6 +97,7 @@ int main11() {
         int * arr1 = SortTestHelper::CopyIntArray(arr,n);
         int * arr2 = SortTestHelper::CopyIntArray(arr,n);
         int * arr3 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr4 = SortTestHelper::CopyIntArray(arr,n);
 
         SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
 
@@ -95,12 +105,16 @@ int main11() {
 
         SortTestHelper::TestSort("QuickSort3Ways", QuickSort3Ways, arr2, n);
 
-        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr3, n);
+        SortTestHelper::TestSort("HeapSort", HeapSort, arr3, n);
+
+        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr4, n);
 
         delete[] arr;
         delete[] arr1;
         delete[] arr2;
         delete[] arr3;
+        delete[] arr4;
+
     }
 
 
