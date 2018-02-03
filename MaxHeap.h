@@ -21,14 +21,14 @@ private:
     int _count;
     int _capacity;
 private:
-    void __ShipUp(int index){
+    void __ShiftUp(int index){
         while(HasParent(index) && GetParent(index) < Get(index)){
             Swap(index, GetParentIndex(index));
             index = GetParentIndex(index);
         }
 
     }
-    void __ShipDown(int index){
+    void __ShiftDown(int index){
 
         while(HasLeftChild(index)){
 
@@ -90,6 +90,21 @@ public:
 
 /*实现主要功能的公共函数*/
 public:
+    MaxHeap(Item data[], int n){
+        
+        _data = new Item[n+1];
+        _capacity = n;
+
+        for (int i = 0; i < n; ++i) {
+            _data[i+1] = data[i];
+        }
+        _count = n;
+
+        //Heapify
+        for (int i = _count/2; i >= 1; --i) {
+            __ShiftDown(i);
+        }
+    }
     MaxHeap(int capacity){
         _data = new Item[capacity + 1];
         _count = 0;
@@ -111,7 +126,7 @@ public:
         }
         _data[_count+1] = item;
         _count++;
-        __ShipUp(_count);
+        __ShiftUp(_count);
     }
     Item ExtractMax(){
         assert(_count > 0);
@@ -119,7 +134,7 @@ public:
         Item return_item = _data[1];
         _data[1] = _data[_count];
         _count --;
-        __ShipDown(1);
+        __ShiftDown(1);
         return return_item;
 
     }

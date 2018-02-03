@@ -40,6 +40,7 @@ int main() {
         int * arr2 = SortTestHelper::CopyIntArray(arr,n);
         int * arr3 = SortTestHelper::CopyIntArray(arr,n);
         int * arr4 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr5 = SortTestHelper::CopyIntArray(arr,n);
 
         SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
 
@@ -51,11 +52,14 @@ int main() {
 
         SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr4, n);
 
+        SortTestHelper::TestSort("HeapSort1", HeapSort1, arr5, n);
+
         delete[] arr;
         delete[] arr1;
         delete[] arr2;
         delete[] arr3;
         delete[] arr4;
+        delete[] arr5;
 
         cout << endl<<endl;
     }
@@ -68,6 +72,7 @@ int main() {
         int * arr2 = SortTestHelper::CopyIntArray(arr,n);
         int * arr3 = SortTestHelper::CopyIntArray(arr,n);
         int * arr4 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr5 = SortTestHelper::CopyIntArray(arr,n);
 
         SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
 
@@ -79,11 +84,14 @@ int main() {
 
         SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr4, n);
 
+        SortTestHelper::TestSort("HeapSort1", HeapSort1, arr5, n);
+
         delete[] arr;
         delete[] arr1;
         delete[] arr2;
         delete[] arr3;
         delete[] arr4;
+        delete[] arr5;
 
         cout << endl<<endl;
     }
@@ -98,6 +106,7 @@ int main() {
         int * arr2 = SortTestHelper::CopyIntArray(arr,n);
         int * arr3 = SortTestHelper::CopyIntArray(arr,n);
         int * arr4 = SortTestHelper::CopyIntArray(arr,n);
+        int * arr5 = SortTestHelper::CopyIntArray(arr,n);
 
         SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
 
@@ -109,11 +118,14 @@ int main() {
 
         SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr4, n);
 
+        SortTestHelper::TestSort("HeapSort1", HeapSort1, arr5, n);
+
         delete[] arr;
         delete[] arr1;
         delete[] arr2;
         delete[] arr3;
         delete[] arr4;
+        delete[] arr5;
 
     }
 
