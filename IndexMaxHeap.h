@@ -20,6 +20,7 @@ class IndexMaxHeap{
 private:
     Item* _data;
     int* _indices;
+    int* _reverse;
     int _count;
     int _capacity;
 private:
@@ -37,8 +38,8 @@ private:
 
             int child_index = __GetLeftChildIndex(index);
             if(__HasRightChild(index) &&
-                    __GetItem(child_index) < __GetItem(GetRightChildIndex(index))){
-                child_index = GetRightChildIndex(index);
+                    __GetItem(child_index) < __GetItem(__GetRightChildIndex(index))){
+                child_index = __GetRightChildIndex(index);
             }
 
             if(__GetItem(index) >= __GetItem(child_index)){
@@ -51,13 +52,24 @@ private:
 
     }
 
-    void __Enlarge(){
+    void __Enlarge(int max_index){
+
+
+        int temp_capacity = _capacity;
+
+        if(_capacity * 2 < max_index){
+            _capacity = max_index/2 + 1;
+        }
+
+        if(max_index > temp_capacity){
+            max_index = temp_capacity;
+        }
 
         _capacity *= 2;
         std::cout << "/* Enlarge "<<_capacity/2+1 << "->"<<_capacity+1 << " */"<<std::endl;
 
         Item* data = new Item[_capacity + 1];
-        memcpy(data, _data, (_indices[0] + 1) * sizeof(Item));//_indices[0]为最大索引
+        memcpy(data, _data, (max_index + 1) * sizeof(Item));//全部数据
 
         delete[] _data;
         _data = data;
@@ -67,6 +79,14 @@ private:
 
         delete[] _indices;
         _indices = indices;
+
+
+        int * reverse = new int[_capacity + 1];
+        memcpy(reverse, _reverse,(max_index + 1) * sizeof(int));
+        memset(reverse + (max_index + 1) * sizeof(int),0,(_capacity - max_index) * sizeof(int));
+
+        delete[] _reverse;
+        _reverse = reverse;
 
 
     }
@@ -84,7 +104,7 @@ private:
     bool __HasRightChild(int index){
         return (2*index+1) <= _count;
     }
-    int GetRightChildIndex(int parent_index){
+    int __GetRightChildIndex(int parent_index){
         return parent_index*2 + 1;
     }
 
@@ -96,6 +116,10 @@ private:
     }
     void __SwapIndex(int a, int b){
         std::swap(_indices[a],_indices[b]);
+        //维护reverse
+//        std::swap(_reverse[_indices[a]],_reverse[_indices[b]]);
+        _reverse[_indices[a]] = a;
+        _reverse[_indices[b]] = b;
     }
 
 /*实现主要功能的公共函数*/
@@ -104,12 +128,19 @@ public:
     IndexMaxHeap(int capacity){
         _data = new Item[capacity + 1];
         _indices = new int[capacity + 1];
+        _reverse = new int[capacity + 1];
+
+        for (int i = 0; i <= capacity; ++i) {
+            _reverse[i] = 0;//表示不存在
+        }
+
         _count = 0;
         _capacity = capacity;
     }
     ~IndexMaxHeap(){
         delete[] _data;
         delete[] _indices;
+        delete[] _reverse;
     }
     int Size(){
         return _count;
@@ -124,13 +155,11 @@ public:
         index ++;// 修正：外部从0开始
         assert(index >= 1);
         if(index > _capacity){
-            if(_capacity * 2 < index){
-                _capacity = index/2 + 1;
-            }
-            __Enlarge();
+            __Enlarge(index);
         }
         _data[index] = item;
         _indices[_count + 1] = index;
+        _reverse[index] = _count + 1;
         _count++;
         __ShiftUp(_count);
     }
@@ -138,7 +167,13 @@ public:
         assert(_count > 0);
 
         Item return_item = __GetItem(1);
+//        _reverse[_indices[_count]] = 1;
+//        _indices[1] = _indices[_count];
+//        _reverse[_indices[_count]] = 0;//删除
+
         _indices[1] = _indices[_count];
+        _reverse[_indices[1]] = 1;
+        _reverse[_indices[_count]] = 0;//删除
         _count --;
         __ShiftDown(1);
         return return_item;
@@ -150,7 +185,13 @@ public:
         assert(_count > 0);
 
         int return_index = _indices[1] - 1;//外部索引从0开始
+//        _reverse[_indices[_count]] = 1;
+//        _indices[1] = _indices[_count];
+//        _reverse[_indices[_count]] = 0;//删除
+
         _indices[1] = _indices[_count];
+        _reverse[_indices[1]] = 1;
+        _reverse[_indices[_count]] = 0;//删除
         _count --;
         __ShiftDown(1);
         return return_index;
@@ -159,22 +200,34 @@ public:
 
     //外部索引从0开始
     Item GetItem(int index){
+        assert(Contain(index));
         return _data[index + 1];
     }
 
     //外部索引从0开始
     void ChangeItem(int index, Item new_item){
 
+        assert(Contain(index));
+
         index++;
         _data[index] = new_item;
-        for (int i = 1; i < _count; ++i) {
-            if(index == i){
-                __ShiftUp(i);
-                __ShiftDown(i);
-                return;
-            }
-        }
+        int indices_index = _reverse[index];
+        __ShiftUp(indices_index);
+        __ShiftDown(indices_index);
+//        for (int i = 1; i < _count; ++i) {
+//            if(index == _indices[i]){
+//                __ShiftUp(i);
+//                __ShiftDown(i);
+//                return;
+//            }
+//        }
 
+    }
+
+    bool Contain(int index){
+        index++;
+        assert(index >= 1 && index <= _capacity);
+        return _reverse[index] == 0;
     }
 
 
