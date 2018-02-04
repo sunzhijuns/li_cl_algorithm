@@ -7,9 +7,32 @@
 #include "MergeSort.h"
 #include "MaxHeap.h"
 #include "HeapSort.h"
+#include "IndexMaxHeap.h"
 
+int main(){
 
-int main11(){
+    //test:容量自增，
+    IndexMaxHeap<int> index_max_heap = IndexMaxHeap<int>(1);
+
+    int n = 8;
+    for (int i = 0; i < n; ++i) {
+        index_max_heap.Insert(i,i+1);
+//        index_max_heap.Insert(i, rand()%10);
+    }
+    index_max_heap.Print();
+
+    //取出最大值：
+    std::cout<<"取出最大值："<<index_max_heap.ExtractMax()<<endl;
+    index_max_heap.Print();
+
+    //取出最大值：
+    std::cout<<"取出最大值："<<index_max_heap.ExtractMax()<<endl;
+    index_max_heap.Print();
+
+    return 0;
+}
+
+int main_test_max_heap(){
     MaxHeap<int> max_heap = MaxHeap<int>(1);
     cout<<max_heap.Size()<< endl;
     srand(time(NULL));
@@ -29,7 +52,7 @@ int main11(){
     return 0;
 }
 
-int main() {
+int main11() {
     int n = 100*10000;
     int print_n = 100;
     {

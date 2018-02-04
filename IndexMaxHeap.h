@@ -167,13 +167,15 @@ public:
         assert(_count > 0);
 
         Item return_item = __GetItem(1);
+        __SwapIndex(1,_count);
+        _reverse[_indices[_count]] = 0;
 //        _reverse[_indices[_count]] = 1;
 //        _indices[1] = _indices[_count];
 //        _reverse[_indices[_count]] = 0;//删除
 
-        _indices[1] = _indices[_count];
-        _reverse[_indices[1]] = 1;
-        _reverse[_indices[_count]] = 0;//删除
+//        _indices[1] = _indices[_count];
+//        _reverse[_indices[1]] = 1;
+//        _reverse[_indices[_count]] = 0;//删除
         _count --;
         __ShiftDown(1);
         return return_item;
@@ -185,13 +187,15 @@ public:
         assert(_count > 0);
 
         int return_index = _indices[1] - 1;//外部索引从0开始
+        __SwapIndex(1,_count);
+        _reverse[_indices[_count]] = 0;
 //        _reverse[_indices[_count]] = 1;
 //        _indices[1] = _indices[_count];
 //        _reverse[_indices[_count]] = 0;//删除
 
-        _indices[1] = _indices[_count];
-        _reverse[_indices[1]] = 1;
-        _reverse[_indices[_count]] = 0;//删除
+//        _indices[1] = _indices[_count];
+//        _reverse[_indices[1]] = 1;
+//        _reverse[_indices[_count]] = 0;//删除
         _count --;
         __ShiftDown(1);
         return return_index;
@@ -232,10 +236,31 @@ public:
 
 
     void Print(){
-        for (int i = 0; i <= _count; ++i) {
+        std::cout<<"i:      ";
+        for (int i = 0; i <= _capacity; ++i) {
+            std::cout<<i<<" ";
+        }
+        std::cout<<std::endl;
+
+        std::cout<<"data:   ";
+        for (int i = 0; i <= _capacity; ++i) {
             std::cout<<_data[i]<<" ";
         }
         std::cout<<std::endl;
+
+        std::cout<<"indices:";
+        for (int i = 0; i <= _capacity; ++i) {
+            std::cout<<_indices[i]<<" ";
+        }
+        std::cout<<std::endl;
+
+        std::cout<<"reverse:";
+        for (int i = 0; i <= _capacity; ++i) {
+            std::cout<<_reverse[i]<<" ";
+        }
+        std::cout<<std::endl;
+
+
     }
 
 };
