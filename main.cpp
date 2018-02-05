@@ -8,8 +8,16 @@
 #include "MaxHeap.h"
 #include "HeapSort.h"
 #include "IndexMaxHeap.h"
+#include "BinarySearch.h"
+
 
 int main(){
+    int a[] = {1,2,3,4,5,6};
+    std::cout << BinarySearch(a, sizeof(a)/ sizeof(int),13)<<std::endl;
+    return 0;
+}
+
+int main_index_max_heap(){
 
     //test:容量自增，
     IndexMaxHeap<int> index_max_heap = IndexMaxHeap<int>(1);
@@ -27,6 +35,12 @@ int main(){
 
     //取出最大值：
     std::cout<<"取出最大值："<<index_max_heap.ExtractMax()<<endl;
+    index_max_heap.Print();
+
+    for (int i = 0; i < 4; ++i) {
+        index_max_heap.ExtractMax();
+    }
+    cout << endl;
     index_max_heap.Print();
 
     return 0;
