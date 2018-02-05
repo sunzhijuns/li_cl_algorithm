@@ -11,7 +11,7 @@
 template<typename T>
 int __BinarySearchRecursion(T arr[], int left, int right, T target){
 
-    std::cout<<"Search from arr["<<left<<","<<right<<"]"<<std::endl;
+//    std::cout<<"Search from arr["<<left<<","<<right<<"]"<<std::endl;
 
     if(left > right){
         return -1;
@@ -35,7 +35,7 @@ int __BinarySearch(T arr[], int left, int right, T target){
     int middle = 0;
     while(left <= right){
 
-        std::cout<<"Search from arr["<<left<<","<<right<<"]"<<std::endl;
+//        std::cout<<"Search from arr["<<left<<","<<right<<"]"<<std::endl;
 
         middle = left + (right - left)/2;
         if(arr[middle] == target){
@@ -56,6 +56,11 @@ template<typename T>
 int BinarySearch(T arr[], int n, T target){
 
     return __BinarySearch(arr,0, n-1,target);
+}
+
+template<typename T>
+int BinarySearchRecursion(T arr[], int n, T target){
+    return __BinarySearchRecursion(arr,0,n-1,target);
 }
 
 #endif //SUANFA_BINARYSEARCH_H

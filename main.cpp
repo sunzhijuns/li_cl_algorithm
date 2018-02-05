@@ -12,160 +12,50 @@
 
 
 int main(){
-    int a[] = {1,2,3,4,5,6};
-    std::cout << BinarySearch(a, sizeof(a)/ sizeof(int),13)<<std::endl;
-    return 0;
-}
-
-int main_index_max_heap(){
-
-    //test:容量自增，
-    IndexMaxHeap<int> index_max_heap = IndexMaxHeap<int>(1);
-
-    int n = 8;
+    int n = 500*10000;
+    int * a = new int[n];
     for (int i = 0; i < n; ++i) {
-        index_max_heap.Insert(i,i+1);
-//        index_max_heap.Insert(i, rand()%10);
-    }
-    index_max_heap.Print();
-
-    //取出最大值：
-    std::cout<<"取出最大值："<<index_max_heap.ExtractMax()<<endl;
-    index_max_heap.Print();
-
-    //取出最大值：
-    std::cout<<"取出最大值："<<index_max_heap.ExtractMax()<<endl;
-    index_max_heap.Print();
-
-    for (int i = 0; i < 4; ++i) {
-        index_max_heap.ExtractMax();
-    }
-    cout << endl;
-    index_max_heap.Print();
-
-    return 0;
-}
-
-int main_test_max_heap(){
-    MaxHeap<int> max_heap = MaxHeap<int>(1);
-    cout<<max_heap.Size()<< endl;
-    srand(time(NULL));
-
-    int n = 5;
-
-    for (int i = 0; i < n; ++i) {
-        max_heap.Insert(rand()%50);
-    }
-    for (int j = 0; j < n; ++j) {
-
-        max_heap.TestPrint();
-        cout<<"------------------------  取出 "<<max_heap.ExtractMax()<<endl;
-        cout<<endl;
-    }
-
-    return 0;
-}
-
-int main11() {
-    int n = 100*10000;
-    int print_n = 100;
-    {
-        cout<<"--一般的随机数组---random array, size = "<<n << ", range = [" <<"0,"<<n<<"]"<<endl;
-        int * arr = SortTestHelper::GenerateRandomArray(n,0,n);
-//    int * arr = SortTestHelper::GenerateNearlyOrderedArray(n,1000);
-        int * arr1 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr2 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr3 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr4 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr5 = SortTestHelper::CopyIntArray(arr,n);
-
-        SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
-
-        SortTestHelper::TestSort("QuickSort", QuickSort, arr1, n);
-
-        SortTestHelper::TestSort("QuickSort3Ways", QuickSort3Ways, arr2, n);
-
-        SortTestHelper::TestSort("HeapSort", HeapSort, arr3, n);
-
-        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr4, n);
-
-        SortTestHelper::TestSort("HeapSort1", HeapSort1, arr5, n);
-
-        delete[] arr;
-        delete[] arr1;
-        delete[] arr2;
-        delete[] arr3;
-        delete[] arr4;
-        delete[] arr5;
-
-        cout << endl<<endl;
+        a[i] = i;
     }
 
     {
-        cout<<"--大量重复键值的随机数组--random array, size = "<<n << ", range = [" <<"0,"<<100<<"]"<<endl;
-        int * arr = SortTestHelper::GenerateRandomArray(n,0,100);
-//    int * arr = SortTestHelper::GenerateNearlyOrderedArray(n,1000);
-        int * arr1 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr2 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr3 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr4 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr5 = SortTestHelper::CopyIntArray(arr,n);
 
-        SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
+        clock_t start_time = clock();
 
-        SortTestHelper::TestSort("QuickSort", QuickSort, arr1, n);
+        for (int i = 0; i < 2 * n; ++i) {
+            int v = BinarySearch(a, n, i);
+            if(i < n){
+                assert(v==i);
+            }
+            else{
+                assert(v == -1);
+            }
+        }
+        clock_t end_time = clock();
+        std::cout<<"Binary Search(Without Recursion): "
+                 <<double(end_time - start_time)/CLOCKS_PER_SEC
+                 <<" s" << std::endl;
 
-        SortTestHelper::TestSort("QuickSort3Ways", QuickSort3Ways, arr2, n);
-
-        SortTestHelper::TestSort("HeapSort", HeapSort, arr3, n);
-
-        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr4, n);
-
-        SortTestHelper::TestSort("HeapSort1", HeapSort1, arr5, n);
-
-        delete[] arr;
-        delete[] arr1;
-        delete[] arr2;
-        delete[] arr3;
-        delete[] arr4;
-        delete[] arr5;
-
-        cout << endl<<endl;
     }
-
-
     {
-        int swap_times = 1000;
-        cout<<"--几乎有序数组--nearly ordered array, size = "<<n << ", swap = "<<swap_times<<endl;
-//        int * arr = SortTestHelper::GenerateRandomArray(n,0,100);
-    int * arr = SortTestHelper::GenerateNearlyOrderedArray(n,swap_times);
-        int * arr1 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr2 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr3 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr4 = SortTestHelper::CopyIntArray(arr,n);
-        int * arr5 = SortTestHelper::CopyIntArray(arr,n);
 
-        SortTestHelper::TestSort("MergeSortOptimizeMemory", MergeSortOptimizeMemory, arr, n);
+        clock_t start_time = clock();
 
-        SortTestHelper::TestSort("QuickSort", QuickSort, arr1, n);
-
-        SortTestHelper::TestSort("QuickSort3Ways", QuickSort3Ways, arr2, n);
-
-        SortTestHelper::TestSort("HeapSort", HeapSort, arr3, n);
-
-        SortTestHelper::TestSort("MergeSortBottomToUpOptimized", MergeSortBottomToUpOptimized, arr4, n);
-
-        SortTestHelper::TestSort("HeapSort1", HeapSort1, arr5, n);
-
-        delete[] arr;
-        delete[] arr1;
-        delete[] arr2;
-        delete[] arr3;
-        delete[] arr4;
-        delete[] arr5;
+        for (int i = 0; i < 2 * n; ++i) {
+            int v = BinarySearchRecursion(a, n, i);
+            if(i < n){
+                assert(v==i);
+            }
+            else{
+                assert(v == -1);
+            }
+        }
+        clock_t end_time = clock();
+        std::cout<<"Binary Search(With Recursion): "
+                 <<double(end_time - start_time)/CLOCKS_PER_SEC
+                 <<" s" << std::endl;
 
     }
-
-
     return 0;
 }
+
