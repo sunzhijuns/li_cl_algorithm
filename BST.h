@@ -77,6 +77,44 @@ private:
         }
     }
 
+    void __PreOrder(Node* node){
+
+        if(node == NULL) return;
+
+        Visit(node);
+        __PreOrder(node->left);
+        __PreOrder(node->right);
+
+    }
+
+    void __InOrder(Node* node){
+
+        if(node == NULL) return;
+
+        __InOrder(node->left);
+        Visit(node);
+        __InOrder(node->right);
+
+    }
+
+    void __PostOrder(Node* node){
+
+        if(node == NULL) return;
+
+        __PostOrder(node->left);
+        __PostOrder(node->right);
+        Visit(node);
+
+    }
+
+    void __Destroy(Node* node){
+        if(node != NULL){
+            __Destroy(node->left);
+            __Destroy(node->right);
+            delete node;
+            _count--;
+        }
+    }
 
 public:
     BST(){
@@ -84,7 +122,7 @@ public:
         _count = 0;
     }
     ~BST(){
-        //TODO:~BST()
+        __Destroy(_root);
     }
     int Size(){
         return _count;
@@ -100,6 +138,22 @@ public:
     }
     Value* Search(Key key){
         return __Search(_root, key);
+    }
+
+    void PreOrder(){
+        __PreOrder(_root);
+    }
+    void InOrder(){
+        __InOrder(_root);
+    }
+    void PostOrder(){
+        __PostOrder(_root);
+    }
+
+    void Visit(Node* node){
+        if(node == NULL) return;
+
+        std::cout<<node->key<<":"<<node->value<<";"<<std::endl;
     }
 };
 
