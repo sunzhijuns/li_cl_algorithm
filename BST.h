@@ -45,6 +45,39 @@ private:
 
         return node;
     }
+
+    bool __Contain(Node* node, Key key){
+        if(node == NULL){
+            return false;
+        }
+        if(node->key == key){
+            return true;
+        }
+        else if(key < node->key){
+            return __Contain(node->left, key);
+        }
+        else{
+            return __Contain(node->right, key);
+        }
+    }
+
+    Value* __Search(Node* node, Key key){
+        if(node == NULL){
+            return NULL;
+        }
+
+        if(node->key == key){
+            return &(node->value);
+        }
+        else if(key < node->key){
+            return __Search(node->left, key);
+        }
+        else{
+            return __Search(node->right, key);
+        }
+    }
+
+
 public:
     BST(){
         _root = NULL;
@@ -61,6 +94,12 @@ public:
     }
     void Insert(Key key, Value value){
         _root = __Insert(_root, key, value);
+    }
+    bool Contain(Key key){
+        return __Contain(_root, key);
+    }
+    Value* Search(Key key){
+        return __Search(_root, key);
     }
 };
 

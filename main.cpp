@@ -1,60 +1,70 @@
-#include <iostream>
-#include "SortTestHelper.h"
-#include "SelectionSort.h"
-#include "InsertionSort.h"
-#include "QuickSort.h"
-
-#include "MergeSort.h"
-#include "MaxHeap.h"
-#include "HeapSort.h"
-#include "IndexMaxHeap.h"
-#include "BinarySearch.h"
-
+#include <string>
+#include <vector>
+#include "FileOps.h"
+#include "BST.h"
+#include "SequenceST.h"
 
 int main(){
-    int n = 500*10000;
-    int * a = new int[n];
-    for (int i = 0; i < n; ++i) {
-        a[i] = i;
-    }
 
-    {
+    std::string filename = "bible.txt";
+    std::vector<std::string> words;
+    if(FileOps::ReadFile(filename, words)){
+        std::cout << "There are totally "
+                  <<words.size()
+                  <<" words in "
+                  <<filename
+                  <<std::endl;
+        std::cout << std::endl;
+        {
+            time_t start_time = clock();
+            BST<std::string,int> bst = BST<std::string, int>();
+            for (std::vector<std::string>::iterator iterator = words.begin();
+                 iterator!= words.end() ; iterator++) {
 
-        clock_t start_time = clock();
+//                std::cout<<*iterator << "--"<<std::endl;
+                int *res = bst.Search(*iterator);
+                if(res == NULL){
+                    bst.Insert(*iterator,1);
+                }
+                else{
+                    (*res)++;
+                }
+            }
 
-        for (int i = 0; i < 2 * n; ++i) {
-            int v = BinarySearch(a, n, i);
-            if(i < n){
-                assert(v==i);
+            if(bst.Contain("god")){
+                std::cout<<"'god' : "<<*bst.Search("god")<<std::endl;
             }
             else{
-                assert(v == -1);
+                std::cout<<"No word 'god' in "<<filename<<std::endl;
             }
+            time_t end_time = clock();
+            std::cout<<"BST, time: "<<double(end_time - start_time)/CLOCKS_PER_SEC<<" s."<<std::endl;
+            std::cout<<std::endl;
         }
-        clock_t end_time = clock();
-        std::cout<<"Binary Search(Without Recursion): "
-                 <<double(end_time - start_time)/CLOCKS_PER_SEC
-                 <<" s" << std::endl;
+        {
+            time_t start_time = clock();
+            SequenceST<std::string,int> sst = SequenceST<std::string, int>();
+            for (std::vector<std::string>::iterator iterator = words.begin();
+                 iterator!= words.end() ; iterator++) {
+                int *res = sst.Search(*iterator);
+                if(res == NULL){
+                    sst.Insert(*iterator,1);
+                }
+                else{
+                    (*res)++;
+                }
+            }
 
-    }
-    {
-
-        clock_t start_time = clock();
-
-        for (int i = 0; i < 2 * n; ++i) {
-            int v = BinarySearchRecursion(a, n, i);
-            if(i < n){
-                assert(v==i);
+            if(sst.Contain("god")){
+                std::cout<<"'god' : "<<*sst.Search("god")<<std::endl;
             }
             else{
-                assert(v == -1);
+                std::cout<<"No word 'god' in "<<filename<<std::endl;
             }
+            time_t end_time = clock();
+            std::cout<<"SST, time: "<<double(end_time - start_time)/CLOCKS_PER_SEC<<" s."<<std::endl;
+            std::cout<<std::endl;
         }
-        clock_t end_time = clock();
-        std::cout<<"Binary Search(With Recursion): "
-                 <<double(end_time - start_time)/CLOCKS_PER_SEC
-                 <<" s" << std::endl;
-
     }
     return 0;
 }
