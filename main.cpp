@@ -6,16 +6,22 @@
 
 int main(){
 
-    BST<int,std::string> bst = BST<int,std::string>();
-    bst.Insert(1,"one");
-    bst.Insert(20,"two");
-    bst.Insert(3,"three");
-    bst.Insert(40,"four");
-    bst.Insert(5,"five");
-    bst.Insert(60,"six");
-    bst.Insert(7,"seven");
+    BST<int,int> bst = BST<int,int>();
+    bst.Insert(1,1);
+    bst.Insert(2,2);
+    bst.Insert(6,6);
+    bst.Insert(5,5);
+    bst.Insert(3,3);
+    bst.Insert(7,7);
+    bst.Insert(100,100);
 
     bst.LevelOrder();
+
+    bst.Remove(6);
+
+    std::cout << std::endl;
+    bst.LevelOrder();
+
 
     return 0;
 }

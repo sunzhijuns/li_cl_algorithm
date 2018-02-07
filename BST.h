@@ -24,6 +24,13 @@ private:
             this->value=value;
             this->left = this->right = NULL;
         }
+
+        Node(Node * node){
+            this->key = node->key;
+            this->value = node->value;
+            this->left = node->left;
+            this->right = node->right;
+        }
     };
     Node * _root;
     int _count;
@@ -231,11 +238,22 @@ private:
             }
             else{
 
-                Node * right_min_node = __Minimum(node->right);
-                right_min_node->left = node->left;
+//                Node * right_min_node = __Minimum(node->right);
+//                right_min_node->left = node->left;
+//                delete node;
+//                _count--;
+//                return right_min_node;
+
+                Node * successor = new Node(__Minimum(node->right));
+                successor->right = __RemoveMinRecursion(node->right);
+                _count++;
+                successor->left = node->left;
+
                 delete node;
                 _count--;
-                return right_min_node;
+
+                return successor;
+
 
             }
         }
