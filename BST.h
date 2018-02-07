@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <queue>
+#include <cassert>
 
 
 template<typename Key, typename Value>
@@ -117,12 +118,145 @@ private:
         }
     }
 
+    Node * __Minimum(Node * node){
+
+        if(node->left != NULL){
+            return __Minimum(node->left);
+        }else{
+            return node;
+        }
+
+    }
+
+    Node* __Maximum(Node* node){
+
+        if(node->right != NULL){
+            return __Maximum(node->right);
+        }
+        else{
+            return node;
+        }
+    }
+
+    Node* __RemoveMin(Node* node){
+
+        Node* pre_min_node = NULL;
+        Node* min_node = node;
+        while (min_node->left != NULL){
+            pre_min_node = min_node;
+            min_node = min_node->left;
+        }
+
+//        //删除根节点
+//        if(pre_min_node == NULL){
+//            node = node->right;
+//        }
+//        else{
+//            pre_min_node->left = min_node->right;
+//        }
+//        delete min_node;
+//        _count--;
+//        return node;
+
+        //删除根节点
+        if(pre_min_node == NULL){
+
+            node = node->right;
+
+            delete min_node;
+            _count--;
+            return node;
+        }
+//        else if(min_node->right ==NULL){
+//
+//            //删除叶子节点
+//            pre_min_node->left = NULL;
+//            delete min_node;
+//            _count--;
+//            return node;
+//        }
+        else{
+            //有右孩子，无左孩子
+            pre_min_node->left = min_node->right;
+            delete min_node;
+            _count--;
+            return node;
+        }
+
+//        return node;
+
+
+    }
+
+    Node* __RemoveMinRecursion(Node* node){
+
+        if(node->left == NULL){
+
+            Node * right_node = node->right;
+            delete node;
+            _count--;
+            return right_node;
+        }
+        node->left = __RemoveMinRecursion(node->left);
+        return node;
+    }
+
+    Node* __RemoveMaxRecursion(Node * node){
+
+        if(node->right == NULL){
+            Node* left_node = node->left;
+            delete node;
+            _count--;
+            return left_node;
+        }
+        node->right = __RemoveMaxRecursion(node->right);
+        return node;
+    }
+
+    //node != NULL
+    Node* __Remove(Node * node, Key key){
+
+        if(node->key == key){
+            if(node->left == NULL){
+                Node * right_node = node->right;
+                delete node;
+                _count--;
+                return right_node;
+            }
+            else if(node->right == NULL){
+                Node * left_node = node->left;
+                delete node;
+                _count--;
+                return left_node;
+            }
+            else{
+
+                Node * right_min_node = __Minimum(node->right);
+                right_min_node->left = node->left;
+                delete node;
+                _count--;
+                return right_min_node;
+
+            }
+        }
+        else if(key < node->key && node->left != NULL){
+            node->left = __Remove(node->left, key);
+            return node;
+        }
+        else if(key > node->key && node->right != NULL){
+            node->right = __Remove(node->right, key);
+            return node;
+        }
+        return node;
+    }
+
 public:
 
     BST(){
         _root = NULL;
         _count = 0;
     }
+
     ~BST(){
         __Destroy(_root);
     }
@@ -141,6 +275,37 @@ public:
     Value* Search(Key key){
         return __Search(_root, key);
     }
+    Key Minimum(){
+        assert(!IsEmpty());
+        Node* minimum_node = __Minimum(_root);
+
+        return minimum_node->key;
+    }
+
+    Key Maximum(){
+        assert(!IsEmpty());
+        Node* maximum_node = __Maximum(_root);
+
+        return maximum_node->key;
+    }
+    void RemoveMin(){
+        if(!IsEmpty()){
+            _root = __RemoveMin(_root);
+        }
+    }
+
+    void RemoveMax(){
+        if(!IsEmpty()){
+            _root = __RemoveMaxRecursion(_root);
+        }
+    }
+
+    void Remove(Key key){
+        if(!IsEmpty()){
+            _root = __Remove(_root, key);
+        }
+    }
+
     void PreOrder(){
         __PreOrder(_root);
     }
