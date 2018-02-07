@@ -1,33 +1,107 @@
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "FileOps.h"
 #include "BST.h"
 #include "SequenceST.h"
 
 int main(){
 
-    BST<int,int> bst = BST<int,int>();
-    bst.Insert(1,1);
-    bst.Insert(2,2);
-    bst.Insert(6,6);
-    bst.Insert(5,5);
-    bst.Insert(3,3);
-    bst.Insert(7,7);
-    bst.Insert(100,100);
+    std::string filename = "bible.txt";
+    std::vector<std::string> words;
 
-    bst.LevelOrder();
+    if(FileOps::ReadFile(filename,words)){
 
-    int* floor = bst.Floor(99);
-    if(floor != NULL){
-        std::cout<<*floor<<std::endl;
+        std::cout<< "There are totally "
+                 << words.size()
+                 <<" words in "
+                 << filename
+                 << std::endl;
+
+        std::cout << std::endl;
+
+        {
+            time_t start_time = clock();
+            BST<std::string, int> bst = BST<std::string, int>();
+            for (std::vector<std::string>::iterator iterator = words.begin();
+                    iterator != words.end();iterator++){
+                int *res = bst.Search(*iterator);
+                if (res == NULL){
+                    bst.Insert(*iterator, 1);
+                }
+                else{
+                    (*res) ++;
+                }
+            }
+            if(bst.Contain("god")){
+                std::cout<< " 'god' :"<<*(bst.Search("god"))<<std::endl;
+            }
+            else{
+                std::cout<<"No word 'god' in "<<filename <<std::endl;
+            }
+            time_t end_time = clock();
+            std::cout<<"BST time:"
+                     <<double(end_time - start_time)/CLOCKS_PER_SEC
+                     <<" .s"
+                     <<std::endl;
+            std::cout << std::endl;
+        }
+        {
+            time_t start_time = clock();
+            SequenceST<std::string, int> bst = SequenceST<std::string, int>();
+            for (std::vector<std::string>::iterator iterator = words.begin();
+                 iterator != words.end();iterator++){
+                int *res = bst.Search(*iterator);
+                if (res == NULL){
+                    bst.Insert(*iterator, 1);
+                }
+                else{
+                    (*res) ++;
+                }
+            }
+            if(bst.Contain("god")){
+                std::cout<< " 'god' :"<<*(bst.Search("god"))<<std::endl;
+            }
+            else{
+                std::cout<<"No word 'god' in "<<filename <<std::endl;
+            }
+            time_t end_time = clock();
+            std::cout<<"SequenceST time:"
+                     <<double(end_time - start_time)/CLOCKS_PER_SEC
+                     <<" .s"
+                     <<std::endl;
+            std::cout << std::endl;
+        }
+
+        {
+            std::sort(words.begin(),words.end());
+
+            time_t start_time = clock();
+            BST<std::string, int> bst = BST<std::string, int>();
+            for (std::vector<std::string>::iterator iterator = words.begin();
+                 iterator != words.end();iterator++){
+                int *res = bst.Search(*iterator);
+                if (res == NULL){
+                    bst.Insert(*iterator, 1);
+                }
+                else{
+                    (*res) ++;
+                }
+            }
+            if(bst.Contain("god")){
+                std::cout<< " 'god' :"<<*(bst.Search("god"))<<std::endl;
+            }
+            else{
+                std::cout<<"No word 'god' in "<<filename <<std::endl;
+            }
+            time_t end_time = clock();
+            std::cout<<"After sort, BST time:"
+                     <<double(end_time - start_time)/CLOCKS_PER_SEC
+                     <<" .s"
+                     <<std::endl;
+            std::cout << std::endl;
+        }
     }
-
-    int * ceil = bst.Ceil(4);
-    if(ceil != NULL){
-        std::cout << *ceil<<std::endl;
-    }
-
-
 
     return 0;
 }
