@@ -125,6 +125,7 @@ private:
         }
     }
 
+    //node != NULL
     Node * __Minimum(Node * node){
 
         if(node->left != NULL){
@@ -268,13 +269,83 @@ private:
         return node;
     }
 
+    //后继
+    Node * __Successor(Node* node){
+        if(node != NULL){
+            return __Minimum(node->right);
+        }
+        return NULL;
+    }
+
+    //前驱
+    Node* __Preducessor(Node * node){
+        if(node!= NULL){
+            return __Maximum(node->left);
+        }
+        return NULL;
+    }
+
+    Node* __Floor(Node* node,Key key){
+
+        if(node != NULL){
+            if(node->key == key){
+                return node;
+            }
+            else if(node->key < key){
+                Node * right_floor = __Floor(node->right, key);
+                if(right_floor != NULL){
+                    return right_floor;
+                }
+                else{
+                    return node;
+                }
+
+            }
+            else{
+                return __Floor(node->left, key);
+            }
+        }else{
+            return NULL;
+        }
+    }
+
+    Node* __Ceil(Node* node, Key key){
+
+        if(node != NULL){
+
+            if(node->key == key){
+                return node;
+            }
+            else if(node->key > key){
+                Node * left_ceil_node = __Ceil(node->left,key);
+                if(left_ceil_node != NULL){
+                    return left_ceil_node;
+                }
+                else{
+                    return node;
+                }
+            }
+            else{
+                return __Ceil(node->right, key);
+            }
+        }
+        else{
+            return NULL;
+        }
+    }
+
+    void Visit(Node* node){
+        if(node == NULL) return;
+
+        std::cout<<node->key<<":"<<node->value<<";"<<std::endl;
+    }
+
 public:
 
     BST(){
         _root = NULL;
         _count = 0;
     }
-
     ~BST(){
         __Destroy(_root);
     }
@@ -293,6 +364,7 @@ public:
     Value* Search(Key key){
         return __Search(_root, key);
     }
+
     Key Minimum(){
         assert(!IsEmpty());
         Node* minimum_node = __Minimum(_root);
@@ -306,6 +378,29 @@ public:
 
         return maximum_node->key;
     }
+
+    Key* Floor(Key key){
+
+        Node * floor = __Floor(_root, key);
+        if (floor != NULL){
+            return &(floor->key);
+        }
+        else{
+            return NULL;
+        }
+
+    }
+
+    Key* Ceil(Key key){
+        Node * ceil = __Ceil(_root ,key);
+        if(ceil != NULL){
+            return &(ceil->key);
+        }
+        else{
+            return NULL;
+        }
+    }
+
     void RemoveMin(){
         if(!IsEmpty()){
             _root = __RemoveMin(_root);
@@ -327,10 +422,10 @@ public:
     void PreOrder(){
         __PreOrder(_root);
     }
-
     void InOrder(){
         __InOrder(_root);
     }
+
     void PostOrder(){
         __PostOrder(_root);
     }
@@ -353,12 +448,6 @@ public:
             }
         }
 
-    }
-
-    void Visit(Node* node){
-        if(node == NULL) return;
-
-        std::cout<<node->key<<":"<<node->value<<";"<<std::endl;
     }
 };
 

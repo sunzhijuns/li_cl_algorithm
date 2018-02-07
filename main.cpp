@@ -17,10 +17,16 @@ int main(){
 
     bst.LevelOrder();
 
-    bst.Remove(6);
+    int* floor = bst.Floor(99);
+    if(floor != NULL){
+        std::cout<<*floor<<std::endl;
+    }
 
-    std::cout << std::endl;
-    bst.LevelOrder();
+    int * ceil = bst.Ceil(4);
+    if(ceil != NULL){
+        std::cout << *ceil<<std::endl;
+    }
+
 
 
     return 0;
