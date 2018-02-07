@@ -6,6 +6,7 @@
 #define SUANFA_BST_H
 
 #include <iostream>
+#include <queue>
 
 
 template<typename Key, typename Value>
@@ -117,6 +118,7 @@ private:
     }
 
 public:
+
     BST(){
         _root = NULL;
         _count = 0;
@@ -139,15 +141,35 @@ public:
     Value* Search(Key key){
         return __Search(_root, key);
     }
-
     void PreOrder(){
         __PreOrder(_root);
     }
+
     void InOrder(){
         __InOrder(_root);
     }
     void PostOrder(){
         __PostOrder(_root);
+    }
+
+    void LevelOrder(){
+
+        std::queue<Node*> queue;
+        queue.push(_root);
+        while(!queue.empty()){
+            Node* node = queue.front();
+            queue.pop();
+
+            Visit(node);
+
+            if(node->left != NULL){
+                queue.push(node->left);
+            }
+            if(node->right != NULL){
+                queue.push(node->right);
+            }
+        }
+
     }
 
     void Visit(Node* node){
