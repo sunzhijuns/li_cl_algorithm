@@ -2,20 +2,20 @@
 // Created by sunzhijun on 18-2-6.
 //
 
-// queue::swap
-#include <iostream>       // std::cout
-#include <queue>          // std::queue
+// sort algorithm example
+#include <iostream>     // std::cout
+#include <algorithm>    // std::sort
+#include <vector>       // std::vector
+#include "AStar.h"
 
-int main_test()
-{
-    std::queue<int> foo,bar;
-    foo.push (10); foo.push(20); foo.push(30);
-    bar.push (111); bar.push(222);
 
-    foo.swap(bar);
-
-    std::cout << "size of foo: " << foo.size() << '\n';
-    std::cout << "size of bar: " << bar.size() << '\n';
-
+int main(){
+    TileType map_data[MAXROW][MAXCOL] = {0};
+    for (int i = 0; i < MAXROW; ++i) {
+        for (int j = 0; j < MAXCOL; ++j) {
+            map_data[i][j] = Tile_Open;
+        }
+    }
+    AStar::run(map_data,8,8,1,1,5,5);
     return 0;
 }

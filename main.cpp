@@ -5,7 +5,7 @@
 #include "BST.h"
 #include "SequenceST.h"
 
-int main(){
+int main1(){
 
     std::string filename = "bible.txt";
     std::vector<std::string> words;
