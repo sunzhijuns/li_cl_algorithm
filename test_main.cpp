@@ -1,21 +1,16 @@
 //
 // Created by sunzhijun on 18-2-6.
 //
+/* floor example */
+#include <stdio.h>      /* printf */
+#include <math.h>       /* floor */
+#include "TestFunc.h"   /*fact*/
 
-// sort algorithm example
-#include <iostream>     // std::cout
-#include <algorithm>    // std::sort
-#include <vector>       // std::vector
-#include "AStar.h"
+int main ()
+{
 
-
-int main(){
-    TileType map_data[MAXROW][MAXCOL] = {0};
-    for (int i = 0; i < MAXROW; ++i) {
-        for (int j = 0; j < MAXCOL; ++j) {
-            map_data[i][j] = Tile_Open;
-        }
-    }
-    AStar::run(map_data,8,8,1,1,5,5);
+    printf("%d\n", fact(3));
+    printf ("%d mod %d = %d\n", 8,5,8%5);
+    TOH(5,1,3,2);
     return 0;
 }
