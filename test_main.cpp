@@ -4,13 +4,26 @@
 /* floor example */
 #include <stdio.h>      /* printf */
 #include <math.h>       /* floor */
-#include "TestFunc.h"   /*fact*/
+#include "Sort.h"
 
+template <class Elem>
+class ElemComp{
+public:
+    static bool lt(Elem& a, Elem& b){
+        return a < b;
+    }
+};
 int main ()
 {
+    int a[] = {12, 13, 0, 5,11};
+    int n = sizeof(a)/ sizeof(a[0]);
 
-    printf("%d\n", fact(3));
-    printf ("%d mod %d = %d\n", 8,5,8%5);
-    TOH(5,1,3,2);
+    sort::szj_quick::QuickSort<int, ElemComp<int>>(a, n);
+    printf("< ");
+    for (int i = 0; i < n; ++i) {
+        printf ("%d ",a[i]);
+    }
+    printf(">\n");
+
     return 0;
 }
