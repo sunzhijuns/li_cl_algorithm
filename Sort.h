@@ -61,6 +61,55 @@ namespace sort{
         }
     };
 
+    namespace szj_merge_sort{
+        template <class Elem, class Comp>
+        void __Merge(Elem arr[], Elem* aux, int left ,int mid ,int right){
+            for (int i = left; i <= right; ++i) {
+                aux[i] = arr[i];
+            }
+            int i1 = left;
+            int i2 = mid+1;
+            for (int i = left; i <= right; ++i) {
+                if (i1 > mid){
+                    arr[i] = aux[i2];
+                    i2++;
+                } else if (i2 > right){
+                    arr[i] = aux[i1];
+                    i1++;
+                }
+                else if (Comp::gt(aux[i2], aux[i1])){
+                    arr[i] = aux[i1];
+                    i1++;
+                } else {
+                    arr[i] = aux[i2];
+                    i2++;
+                }
+            }
+        };
+        template <class Elem, class Comp>
+        void __MergeSort(Elem arr[],Elem* aux, int left, int right){
+            if (right - left > 3) {
+                InsertSort<Elem, Comp>(arr, left, right, 1);
+                return;
+            }
+//            if (left >= right) return;
+            int mid = left + (right - left) / 2;
+            __MergeSort<Elem, Comp>(arr,aux,left,mid);
+            __MergeSort<Elem, Comp>(arr,aux,mid+1,right);
+            if (Comp::gt(arr[mid], arr[mid+1])){
+                __Merge<Elem, Comp>(arr,aux,left,mid,right);
+            }
+        };
+        template <class Elem, class Comp>
+        void MergeSort(Elem arr[], int n){
+            Elem* aux = new Elem[n];
+            __MergeSort<Elem, Comp>(arr,aux, 0, n-1);
+            delete aux;
+        };
+
+
+    }
+
     namespace szj_quick{
         template <class Elem, class Comp>
         int __Partition(Elem arr[], int left, int right){
