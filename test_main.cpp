@@ -9,7 +9,7 @@
 template <class Elem>
 class ElemComp{
 public:
-    static bool lt(Elem& a, Elem& b){
+    inline static bool lt(Elem& a, Elem& b){
         return a < b;
     }
 };

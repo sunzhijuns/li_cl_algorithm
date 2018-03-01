@@ -80,7 +80,7 @@ namespace sort{
         void __QuickSort(Elem arr[], int left, int right){
 
             if (right - left < 3) {
-                InsertSort<Elem, Comp>(arr,left,right,1);
+//                InsertSort<Elem, Comp>(arr,left,right,1);
                 return;
             }
 //            if (left >= right) return ;
@@ -92,6 +92,7 @@ namespace sort{
         template <class Elem, class Comp>
         void QuickSort(Elem arr[], int n){
             __QuickSort<Elem, Comp>(arr, 0, n-1);
+            InsertSort<Elem, Comp>(arr,0,n-1,1);
         };
     }
 
