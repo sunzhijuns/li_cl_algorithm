@@ -21,7 +21,7 @@ public:
 };
 int main ()
 {
-    int a[] = {12, 13, 0, 5,11,11,3233,5,6,4,4,56565,44};
+    int a[] = {12, 13, 0, 5,11};
     int n = sizeof(a)/ sizeof(a[0]);
 
     printf("< ");
@@ -30,7 +30,7 @@ int main ()
     }
     printf(">\n");
 
-    sort::szj_merge_sort::MergeSort<int, ElemComp<int>>(a, n);
+    sort::szj_heap_sort::HeapSort<int, ElemComp<int>>(a, n);
     printf("< ");
     for (int i = 0; i < n; ++i) {
         printf ("%d ",a[i]);

@@ -36,7 +36,7 @@ namespace sort{
         e2 = temp;
     }
     template <class Elem>
-    inline void Swap(Elem array[], int i, int j){
+    inline void Swap(Elem array[], const int& i, const int& j){
         Elem temp = array[i];
         array[i] = array[j];
         array[j] = temp;
@@ -60,6 +60,76 @@ namespace sort{
             }
         }
     };
+
+    namespace szj_heap_sort{
+        template <class Elem, class Comp>
+        class MaxHeapForSort{
+        private:
+            Elem* _data;
+            int _count;
+            void ShiftDown(int pos);
+        public:
+            MaxHeapForSort(Elem* data, const int& num);
+            void RemoveMax();
+            inline bool IsLeaf(const int& pos) const {
+                return (pos >= _count/2) && (pos < _count);
+            }
+            inline int Left(const int& pos) const {
+                return 2*pos + 1;
+            }
+            inline int Right(const int& pos) const {
+                return 2*pos + 2;
+            }
+            inline int Parent(const int& pos) const {
+                return (pos - 1) / 2;
+            }
+        };
+
+        template <class Elem, class Comp>
+        MaxHeapForSort<Elem, Comp>::
+        MaxHeapForSort(Elem* data,const int& num){
+            _data = data; _count = num;
+            for (int i = _count/2 - 1; i >= 0; --i) {
+                ShiftDown(i);
+            }
+        }
+
+        template <class Elem, class Comp>
+        void
+        MaxHeapForSort<Elem, Comp>::
+        RemoveMax(){
+//            if ( _count == 0) return false;
+            --_count;
+            Swap(_data,0,_count); //Swap max with last value
+            if (_count != 0) ShiftDown(0);
+        };
+
+        template <class Elem, class Comp>
+        void
+        MaxHeapForSort<Elem, Comp>::
+        ShiftDown(int pos) {
+            while(!IsLeaf(pos)){
+                int max = Left(pos);
+                int right = Right(pos);
+                if (right < _count && Comp::gt(_data[right], _data[max])){
+                    max = right;
+                }
+                if (Comp::gt(_data[pos], _data[max])) return;
+                Swap(_data, pos, max);
+                pos = max;
+            }
+        }
+
+        template <class Elem, class Comp>
+        void HeapSort(Elem arr[], int n){
+
+            MaxHeapForSort<Elem,Comp> heap(arr,n);
+            for (int i = 0; i < n-1; ++i) {
+                heap.RemoveMax();   // RemoveMax places max at end
+            }
+
+        };
+    }
 
     namespace szj_merge_sort{
         template <class Elem, class Comp>
@@ -144,6 +214,7 @@ namespace sort{
             InsertSort<Elem, Comp>(arr,0,n-1,1);
         };
     }
+
 
 }
 
